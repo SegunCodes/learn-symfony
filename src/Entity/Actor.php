@@ -18,13 +18,14 @@ class Actor
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    // #[ORM\ManyToMany(targetEntity=Movies::class, mappedBy:"actors")]
-    // private $movies;
+    #[ORM\ManyToMany(targetEntity:Movies::class, mappedBy:"actors")]
+    
+    private $movies;
 
-    // public function __construct()
-    // {
-    //     $this->movies = new ArrayCollection();
-    // }
+    public function __construct()
+    {
+        $this->movies = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -43,25 +44,30 @@ class Actor
         return $this;
     }
 
-    // public function getMovies(): Collection
-    // {
-    //     return $this->movies;
-    // }
+    /**
+     * @return Collection|Movie[]
+     */
+    public function getMovies(): Collection
+    {
+        return $this->movies;
+    }
 
-    // public function addMovie(Movies $movie): self
-    // {
-    //     if(!$this->movies->contains($movie)){
-    //         $this->movies[] = $movie;
-    //         $movie->addActor($this);
-    //     }
-    //     return $this;
-    // }
+    public function addMovie(Movies $movie): self
+    {
+        if (!$this->movies->contains($movie)) {
+            $this->movies[] = $movie;
+            $movie->addActor($this);
+        }
 
-    // public function removeMovie(Movies $movie): self
-    // {
-    //     if(!$this->movies->removeElement($movie)){
-    //         $movie->removeActor($this);
-    //     }
-    //     return $this;
-    // }
+        return $this;
+    }
+
+    public function removeMovie(Movies $movie): self
+    {
+        if ($this->movies->removeElement($movie)) {
+            $movie->removeActor($this);
+        }
+
+        return $this;
+    }
 }

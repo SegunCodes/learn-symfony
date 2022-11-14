@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-    {% if movies %}
+    {# {% if movies %}
         {% for movie in movies %}
             <li>
                 {{ movie }}
@@ -12,8 +12,10 @@
         {% endfor %}
     {% else %}
         <p>Oops! No Movies set</p>
-    {% endif %}
+    {% endif %} #}
     {# {{ _self }}
     {{ _charset }}
     {{ author }} #}
+    <h1>Boy</h1>
+    <img src="{{ asset('build/images/tanke.34d21cfd.jpg') }}" alt="">
 {% endblock %}
