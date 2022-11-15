@@ -113,6 +113,15 @@ class MoviesController extends AbstractController
     public function show($id): Response
     {
         $movie = $this->movieRepository->find($id);
+        $this->em->remove($movie);
+        $this->em->flush();
+        return $this->redirectToRoute('app_movies');
+    }
+
+    #[Route('/movies/delete/{id}', methods:['GET', 'DELETE'], name: 'delete_movie')]
+    public function delete($id): Response
+    {
+        $movie = $this->movieRepository->find($id);
         return $this->render('movies/show.html.twig',[
             'movie' => $movie
         ]);
